@@ -6,7 +6,9 @@ import store from "./store";
 
 const app = createApp(App);
 
-registerApp(app); // 全局注册
+// registerApp(app); // 全局注册
+
+app.use(registerApp);
 
 app.use(store);
 app.use(router);
