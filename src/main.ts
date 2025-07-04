@@ -1,14 +1,12 @@
 import { createApp } from "vue";
-import { registerApp } from "./global";
+import { globalRegister } from "./global";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
 const app = createApp(App);
 
-// registerApp(app); // 全局注册
-
-app.use(registerApp);
+app.use(globalRegister); // 使用全局注册函数
 
 app.use(store);
 app.use(router);
