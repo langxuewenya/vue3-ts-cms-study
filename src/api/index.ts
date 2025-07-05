@@ -10,6 +10,12 @@ export default new ApiRequest({
   interceptors: {
     // 请求成功拦截器
     requestInterceptor: (config) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        // 如果有token，则将其添加到请求头中
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+
       return config;
     },
     // 请求失败拦截器

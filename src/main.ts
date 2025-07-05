@@ -14,8 +14,14 @@ app.use(router);
 
 app.mount("#app");
 
-ApiRequest.request({
-  url: "",
+interface DataType {
+  data: any;
+  returnCode: string;
+  success: boolean;
+}
+
+ApiRequest.request<DataType>({
+  url: "/get",
   method: "get",
   interceptors: {
     requestInterceptor: (config: any) => {
@@ -27,8 +33,12 @@ ApiRequest.request({
       return response;
     }
   }
+}).then((res) => {
+  console.log("请求结果", res.returnCode, res.success);
 });
-ApiRequest.request({
-  url: "",
-  method: "get"
-});
+setTimeout(() => {
+  ApiRequest.get<DataType>({
+    url: "/get",
+    showLoading: false
+  });
+}, 3000);
