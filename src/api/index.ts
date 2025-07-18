@@ -2,6 +2,7 @@
 
 import ApiRequest from "./request";
 import { BASE_URL, TIME_OUT } from "./request/config";
+import { localCache } from "@/utils/cache";
 
 export default new ApiRequest({
   baseURL: BASE_URL,
@@ -10,9 +11,8 @@ export default new ApiRequest({
   interceptors: {
     // 请求成功拦截器
     requestInterceptor: (config) => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        // 如果有token，则将其添加到请求头中
+      const token = localCache.getCache("token");
+      if (token && config.headers) {
         config.headers.Authorization = `Bearer ${token}`;
       }
 

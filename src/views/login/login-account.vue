@@ -45,20 +45,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, reactive, watch } from "vue";
 import { ElForm } from "element-plus";
 
 import { rules } from "./config";
+import { localCache } from "@/utils/cache";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "LoginAccountPage",
   setup() {
-    const rememberPassword = ref(true);
+    const rememberPassword = ref(
+      localCache.getCache("rememberPassword") || false
+    );
     const account = reactive({
-      username: "",
-      password: ""
+      username: localCache.getCache("username") || "",
+      password: localCache.getCache("password") || ""
     });
     const formRef = ref<InstanceType<typeof ElForm>>();
+    const store = useStore();
+
+    // 监听记住密码的变化，将其存入缓存
+    watch(rememberPassword, (newVal) => {
+      localCache.setCache("rememberPassword", newVal);
+    });
 
     const handleLoginClick = () => {
       // 登录逻辑
@@ -67,6 +77,19 @@ export default defineComponent({
           console.log("表单验证失败");
           return;
         }
+        // 验证成功，执行登录逻辑
+        // 1. 判断是否需要记住密码
+        if (rememberPassword.value) {
+          // 记住密码，将用户名和密码存入缓存
+          localCache.setCache("username", account.username);
+          localCache.setCache("password", account.password);
+        } else {
+          // 不记住密码，清除缓存
+          localCache.deleteCache("username");
+          localCache.deleteCache("password");
+        }
+        // 2. 登录验证
+        store.dispatch("loginModule/accountLoginAction", { ...account });
       });
       console.log("登录信息：", account);
     };
