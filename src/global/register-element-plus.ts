@@ -30,7 +30,15 @@ import {
   ElDatePicker,
   ElTimePicker,
   ElUpload,
-  ElCard
+  ElCard,
+  ElContainer,
+  ElAside,
+  ElHeader,
+  ElMain,
+  ElMenu,
+  ElSubMenu,
+  ElMenuItem,
+  ElMenuItemGroup
 } from "element-plus";
 
 const components = [
@@ -63,7 +71,15 @@ const components = [
   ElDatePicker,
   ElTimePicker,
   ElUpload,
-  ElCard
+  ElCard,
+  ElContainer,
+  ElAside,
+  ElHeader,
+  ElMain,
+  ElMenu,
+  ElSubMenu,
+  ElMenuItem,
+  ElMenuItemGroup
 ];
 
 // 声明component类型，否则下面的 component.name 会报错

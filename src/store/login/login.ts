@@ -56,7 +56,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 3. 根据角色获取用户菜单
       const roleId = userInfo?.role?.id;
       const userMenusRes: any = await getUserMenusByRoleId(
-        { apipost_id: "3a7e0d6e7111bf" },
+        { apipost_id: "3b4f7e99f11060" },
         roleId
       );
       const userMenus = userMenusRes?.data;

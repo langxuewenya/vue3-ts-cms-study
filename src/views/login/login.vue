@@ -38,10 +38,12 @@ export default defineComponent({
   height: 100vh;
   display: flex;
   background-color: @bg;
+
   .left,
   .right {
     height: 100%;
   }
+
   .left {
     width: 45%;
     border-right: 2px solid #e2e2e2;
@@ -49,6 +51,7 @@ export default defineComponent({
     justify-content: center;
     flex-direction: column;
     align-items: center;
+
     .system-title {
       font-size: clamp(1.8rem, 3.2vw, 3.8rem);
       font-weight: 600;
@@ -56,9 +59,11 @@ export default defineComponent({
       align-items: center;
       margin-bottom: 8%;
     }
+
     .image {
       text-align: center;
       height: 60%;
+
       .login-img {
         width: 95%;
         height: 95%;
