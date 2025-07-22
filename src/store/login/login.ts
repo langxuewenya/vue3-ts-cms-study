@@ -72,6 +72,15 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       // 4. 跳转到首页
       router.push("/main");
+    },
+    // 加载本地缓存
+    loadLocalCache({ commit }) {
+      const token = localCache.getCache("token");
+      if (token) commit("changeToken", token);
+      const userInfo = localCache.getCache("userInfo");
+      if (userInfo) commit("saveUserInfo", userInfo);
+      const userMenus = localCache.getCache("userMenus");
+      if (userMenus) commit("changeUserMenus", userMenus);
     }
   }
 };

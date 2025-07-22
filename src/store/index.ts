@@ -18,4 +18,8 @@ const store = createStore<IRootState>({
   }
 });
 
+export function setupStore() {
+  store.dispatch("loginModule/loadLocalCache");
+}
+
 export default store;
