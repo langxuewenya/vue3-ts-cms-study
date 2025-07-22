@@ -8,7 +8,9 @@
         <el-header class="header">
           <NavHeader @handleFoldOrExpand="handleFoldOrExpand" />
         </el-header>
-        <el-main class="main">主页面</el-main>
+        <el-main class="main">
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>

@@ -10,6 +10,7 @@ import {
   getUserMenusByRoleId
 } from "@/api/login/login";
 import { localCache } from "@/utils/cache";
+import { mapMenusToRoutes } from "@/utils/map-menus";
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -29,6 +30,12 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus;
+
+      const routes = mapMenusToRoutes(userMenus);
+      // 将动态路由添加到路由器中
+      routes.forEach((route) => {
+        router.addRoute("main", route);
+      });
     }
   },
   getters: {},

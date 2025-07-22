@@ -5,7 +5,7 @@
       <span v-if="!isFold" class="title">{{ systemName }}</span>
     </div>
     <el-menu
-      default-active="3"
+      default-active="1"
       class="el-menu-vertical"
       :collapse="isFold"
       active-text-color="#005a8d"
@@ -24,7 +24,10 @@
             </template>
             <!-- 遍历二级菜单 -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="subitem.id + ''">
+              <el-menu-item
+                :index="subitem.id + ''"
+                @click="handleMenuItemClick(subitem)"
+              >
                 <el-icon v-if="subitem.icon">
                   <component :is="getIcon(subitem.icon)" />
                 </el-icon>
@@ -35,7 +38,10 @@
         </template>
         <!-- 一级菜单 -->
         <template v-else-if="item.type === 2">
-          <el-menu-item>
+          <el-menu-item
+            :index="item.id + ''"
+            @click="handleMenuItemClick(item)"
+          >
             <el-icon v-if="item.icon">
               <component :is="getIcon(item.icon)" />
             </el-icon>
@@ -51,6 +57,7 @@
 import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 import * as Icons from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "NavMenuPage",
@@ -66,45 +73,15 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const systemName = ref(process.env.VUE_APP_SYSTEM_NAME || "管理系统");
+    const router = useRouter();
 
     const userMenus = computed(() => {
-      //   return store.state.loginModule.userMenus;
-      return [
-        {
-          id: 1,
-          url: "/main/home",
-          icon: "HomeFilled",
-          name: "首页",
-          type: 2,
-          children: []
-        },
-        {
-          id: 2,
-          url: "/main/system",
-          icon: "Setting",
-          name: "系统管理",
-          type: 1,
-          children: [
-            {
-              id: 3,
-              url: "/main/system/user-mgr",
-              icon: "User",
-              name: "用户管理",
-              type: 2,
-              children: []
-            },
-            {
-              id: 4,
-              url: "/main/system/role-mgr",
-              icon: "Postcard",
-              name: "角色管理",
-              type: 2,
-              children: []
-            }
-          ]
-        }
-      ];
+      return store.state.loginModule.userMenus;
     });
+
+    const handleMenuItemClick = (item: any) => {
+      router.push(item.url || "not-found");
+    };
 
     function getIcon(iconName: string) {
       return Icons[iconName as keyof typeof Icons];
@@ -114,7 +91,8 @@ export default defineComponent({
       systemName,
       userMenus,
       Icons,
-      getIcon
+      getIcon,
+      handleMenuItemClick
     };
   }
 });

@@ -1,0 +1,34 @@
+import { RouteRecordRaw } from "vue-router";
+
+export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
+  const routes: RouteRecordRaw[] = [];
+
+  // 1. 读取本地所有的路由
+  const localRoutes: RouteRecordRaw[] = [];
+  const routeFiles = require.context("../router/main", true, /\.ts/);
+  routeFiles.keys().forEach((key) => {
+    const route = routeFiles(key).default; // 拿到每个路由文件的默认导出对象，用于后续动态注册到路由表中
+    localRoutes.push(route);
+  });
+
+  console.log("localRoutes", localRoutes);
+
+  // 2. 根据菜单获取需要添加的routes
+  // 递归函数实现
+  const _recurseGetRoute = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 2) {
+        // 如果是需要展示的菜单类型
+        const route = localRoutes.find((route) => route.path === menu.url);
+        if (route) routes.push(route);
+      } else {
+        // 否则 目录类型，继续进行递归
+        _recurseGetRoute(menu.children);
+      }
+    }
+  };
+
+  _recurseGetRoute(userMenus);
+
+  return routes;
+}
