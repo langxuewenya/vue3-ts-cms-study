@@ -5,32 +5,49 @@
         <Expand v-if="isFold" />
         <Fold v-else />
       </el-icon>
+      <div class="router">
+        <Breadcrumb :breadcrumbs="breadcrumb" />
+      </div>
     </div>
     <div class="right"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { Expand, Fold } from "@element-plus/icons-vue";
+import Breadcrumb from "@/base-ui/breadcrumb";
+import { pathMapBreadcrumbs } from "@/utils/map-menus";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "NavHeaderPage",
   components: {
     Expand,
-    Fold
+    Fold,
+    Breadcrumb
   },
   emits: ["handleFoldOrExpand"],
   setup(props, { emit }) {
     const isFold = ref(false);
-
     const foldOrExpand = () => {
       isFold.value = !isFold.value;
       emit("handleFoldOrExpand", isFold.value);
     };
+
+    const store = useStore();
+    const route = useRoute();
+    const breadcrumb = computed(() => {
+      const userMenus = store.state.loginModule.userMenus;
+      const currentPath = route.path;
+      return pathMapBreadcrumbs(userMenus, currentPath);
+    });
+
     return {
       isFold,
-      foldOrExpand
+      foldOrExpand,
+      breadcrumb
     };
   }
 });
@@ -46,10 +63,17 @@ export default defineComponent({
   justify-content: space-between;
 
   .left {
+    align-items: center;
+    display: flex;
+
     .expand-fold-icon {
       color: @icon-color;
       font-size: 24px;
       cursor: pointer;
+    }
+
+    .router {
+      padding-left: 10px;
     }
   }
 }
