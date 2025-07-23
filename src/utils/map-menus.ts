@@ -1,5 +1,7 @@
 import { RouteRecordRaw } from "vue-router";
 
+let firstMenu: any = null;
+
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = [];
 
@@ -11,8 +13,6 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
     localRoutes.push(route);
   });
 
-  console.log("localRoutes", localRoutes);
-
   // 2. 根据菜单获取需要添加的routes
   // 递归函数实现
   const _recurseGetRoute = (menus: any[]) => {
@@ -21,6 +21,9 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
         // 如果是需要展示的菜单类型
         const route = localRoutes.find((route) => route.path === menu.url);
         if (route) routes.push(route);
+        if (!firstMenu) {
+          firstMenu = menu;
+        }
       } else {
         // 否则 目录类型，继续进行递归
         _recurseGetRoute(menu.children);
@@ -32,3 +35,18 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 
   return routes;
 }
+
+export function pathMapToMenu(userMenus: any[], currentPath: string): any {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenu(menu.children || [], currentPath);
+      if (findMenu) {
+        return findMenu;
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu;
+    }
+  }
+}
+
+export { firstMenu };

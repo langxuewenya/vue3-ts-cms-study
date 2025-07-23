@@ -5,7 +5,7 @@
       <span v-if="!isFold" class="title">{{ systemName }}</span>
     </div>
     <el-menu
-      default-active="1"
+      :default-active="selectedmenuId"
       class="el-menu-vertical"
       :collapse="isFold"
       active-text-color="#005a8d"
@@ -57,7 +57,8 @@
 import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 import * as Icons from "@element-plus/icons-vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import { pathMapToMenu } from "@/utils/map-menus";
 
 export default defineComponent({
   name: "NavMenuPage",
@@ -73,11 +74,14 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const systemName = ref(process.env.VUE_APP_SYSTEM_NAME || "管理系统");
-    const router = useRouter();
+    const userMenus = computed(() => store.state.loginModule.userMenus);
 
-    const userMenus = computed(() => {
-      return store.state.loginModule.userMenus;
-    });
+    const router = useRouter();
+    const route = useRoute();
+    const currentPath = route.path;
+
+    const menu = pathMapToMenu(userMenus.value, currentPath);
+    const selectedmenuId = ref(menu.id + "");
 
     const handleMenuItemClick = (item: any) => {
       router.push(item.url || "not-found");
@@ -88,6 +92,7 @@ export default defineComponent({
     }
 
     return {
+      selectedmenuId,
       systemName,
       userMenus,
       Icons,
