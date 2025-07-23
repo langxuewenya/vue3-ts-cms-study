@@ -9,13 +9,16 @@
         <Breadcrumb :breadcrumbs="breadcrumb" />
       </div>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <UserInfo />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import { Expand, Fold } from "@element-plus/icons-vue";
+import UserInfo from "./user-info.vue";
 import Breadcrumb from "@/base-ui/breadcrumb";
 import { pathMapBreadcrumbs } from "@/utils/map-menus";
 import { useStore } from "vuex";
@@ -26,7 +29,8 @@ export default defineComponent({
   components: {
     Expand,
     Fold,
-    Breadcrumb
+    Breadcrumb,
+    UserInfo
   },
   emits: ["handleFoldOrExpand"],
   setup(props, { emit }) {

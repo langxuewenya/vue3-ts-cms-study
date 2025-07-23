@@ -7,7 +7,8 @@ import { IRootState } from "../types";
 import {
   accountLoginRequest,
   getUserById,
-  getUserMenusByRoleId
+  getUserMenusByRoleId,
+  logout
 } from "@/api/login/login";
 import { localCache } from "@/utils/cache";
 import { mapMenusToRoutes } from "@/utils/map-menus";
@@ -73,6 +74,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 4. 跳转到首页
       router.push("/main");
     },
+
     // 加载本地缓存
     loadLocalCache({ commit }) {
       const token = localCache.getCache("token");
@@ -81,6 +83,24 @@ const loginModule: Module<ILoginState, IRootState> = {
       if (userInfo) commit("saveUserInfo", userInfo);
       const userMenus = localCache.getCache("userMenus");
       if (userMenus) commit("changeUserMenus", userMenus);
+    },
+
+    // 退出登录
+    async logoutAction({ commit }) {
+      const userId = localCache.getCache("userInfo").id;
+      const logoutRes: any = await logout(
+        { apipost_id: "1c7cd5831118d" },
+        userId
+      );
+      if (logoutRes.msg === "success") {
+        // 清空缓存
+        commit("changeToken", "");
+        commit("saveUserInfo", {});
+        commit("changeUserMenus", []);
+
+        // 跳转登录页
+        router.push("/login");
+      }
     }
   }
 };

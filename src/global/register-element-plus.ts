@@ -40,7 +40,8 @@ import {
   ElMenuItem,
   ElMenuItemGroup,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElAvatar
 } from "element-plus";
 
 const components = [
@@ -83,7 +84,8 @@ const components = [
   ElMenuItem,
   ElMenuItemGroup,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElAvatar
 ];
 
 // 声明component类型，否则下面的 component.name 会报错
