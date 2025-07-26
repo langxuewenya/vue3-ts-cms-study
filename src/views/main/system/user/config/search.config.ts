@@ -1,5 +1,7 @@
 import { IForm } from "@/base-ui/select-form";
 
+import { sexEnum } from "./enum";
+
 export const searchFormConfig: IForm = {
   labelWidth: "80px",
   itemStyle: {
@@ -24,10 +26,7 @@ export const searchFormConfig: IForm = {
       type: "select",
       label: "性别",
       placeholder: "请选择性别",
-      options: [
-        { label: "男", value: "man" },
-        { label: "女", value: "woman" }
-      ]
+      options: sexEnum
     },
     {
       field: "createTime",

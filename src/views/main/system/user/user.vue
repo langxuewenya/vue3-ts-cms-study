@@ -1,31 +1,42 @@
 <template>
   <div class="user">
-    <PageSearch :searchFormConfig="searchFormConfig" />
+    <PageSearch
+      :searchFormConfig="searchFormConfig"
+      @handleReset="handleSearch"
+      @handleSearch="handleSearch"
+    />
+    <PageList
+      ref="pagListRef"
+      :listTableConfig="listTableConfig"
+      pageName="user"
+    ></PageList>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { searchFormConfig } from "./config/search.config";
+
 import PageSearch from "@/components/page-search";
-import { useStore } from "vuex";
+import PageList from "@/components/page-list";
+
+import { searchFormConfig } from "./config/search.config";
+import { listTableConfig } from "./config/list.config";
+import { usePageSearch } from "@/hooks/usePageSearch";
 
 export default defineComponent({
   name: "UserPage",
   components: {
-    PageSearch
+    PageSearch,
+    PageList
   },
   setup() {
-    const store = useStore();
-    store.dispatch("systemModule/getPageListAction", {
-      pageUrl: "/user/list",
-      queryInfo: {
-        size: 10
-      }
-    });
+    const { pagListRef, handleSearch } = usePageSearch();
 
     return {
-      searchFormConfig
+      searchFormConfig,
+      listTableConfig,
+      handleSearch,
+      pagListRef
     };
   }
 });

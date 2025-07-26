@@ -4,7 +4,6 @@ import router from "./router";
 import store, { setupStore } from "./store";
 
 import { globalRegister } from "./global";
-// import ApiRequest from "./api/index";
 
 import "normalize.css"; // 引入样式重置
 import "./assets/css/index.less"; // 引入全局样式
@@ -17,32 +16,3 @@ setupStore();
 app.use(router);
 
 app.mount("#app");
-
-// interface DataType {
-//   data: any;
-//   returnCode: string;
-//   success: boolean;
-// }
-
-// ApiRequest.request<DataType>({
-//   url: "/book",
-//   method: "get",
-//   interceptors: {
-//     requestInterceptor: (config: any) => {
-//       console.log("单独请求拦截器");
-//       return config;
-//     },
-//     responseInterceptor: (response: any) => {
-//       console.log("单独响应拦截器");
-//       return response;
-//     }
-//   }
-// }).then((res) => {
-//   console.log("请求结果", res, res.returnCode, res.success);
-// });
-// setTimeout(() => {
-//   ApiRequest.get<DataType>({
-//     url: "/get",
-//     showLoading: false
-//   });
-// }, 3000);

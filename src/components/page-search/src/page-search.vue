@@ -29,7 +29,8 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ["handleReset", "handleSearch"],
+  setup(props, { emit }) {
     const formItems = props.searchFormConfig.formItems || [];
     const formOriginData: any = {};
     for (const item of formItems) {
@@ -42,13 +43,11 @@ export default defineComponent({
       for (const item in formOriginData) {
         formData.value[item] = formOriginData[item];
       }
-      // 接口逻辑（待实现）
+      emit("handleReset", formData.value);
     };
 
     // 搜索
-    const handleSearch = () => {
-      // 搜索逻辑（待实现）
-    };
+    const handleSearch = () => emit("handleSearch", formData.value);
 
     return {
       formData,
@@ -57,6 +56,10 @@ export default defineComponent({
       handleReset,
       handleSearch
     };
+  },
+  // 页面首次加载触发搜索事件
+  mounted() {
+    this.handleSearch();
   }
 });
 </script>
