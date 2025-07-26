@@ -19,7 +19,16 @@
           <el-button type="primary" link>删除</el-button>
         </div>
       </template>
-      <template #footer> </template>
+      <!-- 动态插入其他插槽 -->
+      <template
+        v-for="item in otherPropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
+      </template>
     </ListTable>
   </div>
 </template>
@@ -73,6 +82,15 @@ export default defineComponent({
       store.getters["systemModule/pageDatasCount"](props.pageName)
     );
 
+    // 动态获取自定义外的其他插槽
+    const defaultSlots = ["createTime", "handler"]; // 已自定义好的插槽
+    const otherPropSlots = props.listTableConfig.propList.filter(
+      (item: any) => {
+        if (defaultSlots.includes(item.slotName)) return false;
+        return true;
+      }
+    );
+
     return {
       dataList,
       datasTotalCount,
@@ -80,7 +98,8 @@ export default defineComponent({
       Plus,
       Refresh,
       formatDateTime,
-      pageInfo
+      pageInfo,
+      otherPropSlots
     };
   }
 });

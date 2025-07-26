@@ -6,7 +6,13 @@ export const listTableConfig = {
   showSelectColumn: true, // 是否可选行数据
   propList: [
     { prop: "username", label: "用户名", minWidth: "100px", align: "center" },
-    { prop: "phone", label: "手机号", minWidth: "100px", align: "center" },
+    {
+      prop: "phone",
+      label: "手机号",
+      minWidth: "100px",
+      align: "center",
+      slotName: "phone"
+    },
     {
       prop: "sex",
       label: "性别",

@@ -35,7 +35,7 @@
               <div v-if="item.isEnum">
                 {{ item?.optionMap?.[scope.row[item.prop || ""]] }}
               </div>
-              <!-- 其他类型 -->
+              <!-- 非枚举类型 -->
               <div v-else>
                 {{ scope.row[item.prop || ""] }}
               </div>

@@ -9,7 +9,9 @@
       ref="pagListRef"
       :listTableConfig="listTableConfig"
       pageName="user"
-    ></PageList>
+    >
+      <template #phone="scope">{{ "86 - " + scope.row.phone }}</template>
+    </PageList>
   </div>
 </template>
 
