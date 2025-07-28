@@ -7,7 +7,13 @@ import { getPageListData } from "@/api/main/system/system";
 import { capitalizeString } from "@/utils/tool";
 
 const pageUrlMap: Record<string, any> = {
-  user: "/user/list" // 用户页面
+  user: "/user/list", // 用户页面
+  menu: "/menu/list" // 菜单页面
+};
+
+const apipostId: any = {
+  user: "33d1304311292",
+  menu: "710a7eb7112c0"
 };
 
 const systemModule: Module<ISystemState, IRootState> = {
@@ -15,7 +21,9 @@ const systemModule: Module<ISystemState, IRootState> = {
   state() {
     return {
       userList: [],
-      userTotalCount: 0
+      userTotalCount: 0,
+      menuList: [],
+      menuTotalCount: 0
     };
   },
   mutations: {
@@ -24,6 +32,12 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeUserTotalCount(state, userTotalCount: number) {
       state.userTotalCount = userTotalCount;
+    },
+    changeMenuList(state, menuList: any[]) {
+      state.menuList = menuList;
+    },
+    changeMenuTotalCount(state, menuTotalCount: number) {
+      state.menuTotalCount = menuTotalCount;
     }
   },
   // getter可以返回一个函数
@@ -45,7 +59,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       const pageUrl = pageUrlMap[pageName];
 
       const pageListRes: any = await getPageListData(
-        { apipost_id: "33d1304311292" },
+        { apipost_id: apipostId[pageName] },
         pageUrl,
         payload.queryInfo
       );

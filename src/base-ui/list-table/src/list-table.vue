@@ -10,6 +10,7 @@
     </div>
     <el-table
       :data="listData"
+      v-bind="treePropsConfig"
       border
       style="width: 100%"
       @selection-change="handleSelectionChange"
@@ -32,19 +33,19 @@
           <template #default="scope">
             <slot :name="item.slotName" :row="scope.row">
               <!-- 枚举类型 -->
-              <div v-if="item.isEnum">
+              <template v-if="item.isEnum">
                 {{ item?.optionMap?.[scope.row[item.prop || ""]] }}
-              </div>
+              </template>
               <!-- 非枚举类型 -->
-              <div v-else>
+              <template v-else>
                 {{ scope.row[item.prop || ""] }}
-              </div>
+              </template>
             </slot>
           </template>
         </el-table-column>
       </template>
     </el-table>
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
       <slot name="footer">
         <el-pagination
           v-model:current-page="pageInfo.currentPage"
@@ -94,6 +95,16 @@ export default defineComponent({
     page: {
       type: Object,
       default: () => ({ currentPage: 1, pageSize: 10 })
+    },
+    // 是否显示分页器
+    showFooter: {
+      type: Boolean,
+      default: true
+    },
+    // 渲染树形数据的配置
+    treePropsConfig: {
+      type: Object,
+      default: () => ({})
     }
   },
   emits: ["selectionChange", "update:page"],
