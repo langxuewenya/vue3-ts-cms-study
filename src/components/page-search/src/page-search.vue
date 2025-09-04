@@ -17,6 +17,7 @@
 import { defineComponent, ref } from "vue";
 import SelectForm from "@/base-ui/select-form";
 import { Refresh, Search } from "@element-plus/icons-vue";
+import { formatDateTime } from "@/utils/format";
 
 export default defineComponent({
   name: "PageSearch",
@@ -47,7 +48,23 @@ export default defineComponent({
     };
 
     // 搜索
-    const handleSearch = () => emit("handleSearch", formData.value);
+    const handleSearch = () =>
+      emit("handleSearch", {
+        ...formData.value,
+        createTime:
+          formData.value.createTime.length > 1
+            ? [
+                formatDateTime(
+                  formData.value.createTime[0],
+                  "YYYY-MM-DD 00:00:00"
+                ),
+                formatDateTime(
+                  formData.value.createTime[1],
+                  "YYYY-MM-DD 23:23:59"
+                )
+              ]
+            : formData.value.createTime
+      });
 
     return {
       formData,

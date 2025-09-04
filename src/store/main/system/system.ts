@@ -4,16 +4,12 @@ import { ISystemState } from "./types";
 import { IRootState } from "../../types";
 
 import { getPageListData } from "@/api/main/system/system";
-import { capitalizeString } from "@/utils/tool";
+import { capitalizeString, menuListToTree } from "@/utils/tool";
+import { formatDateTime } from "@/utils/format";
 
 const pageUrlMap: Record<string, any> = {
   user: "/user/list", // 用户页面
   menu: "/menu/list" // 菜单页面
-};
-
-const apipostId: any = {
-  user: "33d1304311292",
-  menu: "710a7eb7112c0"
 };
 
 const systemModule: Module<ISystemState, IRootState> = {
@@ -28,13 +24,28 @@ const systemModule: Module<ISystemState, IRootState> = {
   },
   mutations: {
     changeUserList(state, userList: any[]) {
-      state.userList = userList;
+      // 格式化
+      const formatList = userList.map((item) => {
+        return {
+          ...item,
+          createTime: formatDateTime(item.create_time),
+          updateTime: formatDateTime(item.update_time),
+          roleId: item.role_id
+        };
+      });
+      state.userList = formatList;
     },
     changeUserTotalCount(state, userTotalCount: number) {
       state.userTotalCount = userTotalCount;
     },
     changeMenuList(state, menuList: any[]) {
-      state.menuList = menuList;
+      const formatList = menuList.map((item) => {
+        return {
+          ...item,
+          createTime: formatDateTime(item.create_time)
+        };
+      });
+      state.menuList = menuListToTree(formatList);
     },
     changeMenuTotalCount(state, menuTotalCount: number) {
       state.menuTotalCount = menuTotalCount;
@@ -59,7 +70,6 @@ const systemModule: Module<ISystemState, IRootState> = {
       const pageUrl = pageUrlMap[pageName];
 
       const pageListRes: any = await getPageListData(
-        { apipost_id: apipostId[pageName] },
         pageUrl,
         payload.queryInfo
       );

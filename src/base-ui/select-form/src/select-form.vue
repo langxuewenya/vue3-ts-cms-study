@@ -13,6 +13,7 @@
                 <el-input
                   v-model="formData[`${item.field}`]"
                   :placeholder="item.placeholder"
+                  clearable
                 />
               </template>
               <!-- select -->

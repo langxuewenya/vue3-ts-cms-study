@@ -18,9 +18,9 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   // 递归函数实现
   const _recurseGetRoute = (menus: any[]) => {
     for (const menu of menus) {
-      if (menu.type === 2) {
+      if (menu.type === "2") {
         // 如果是需要展示的菜单类型
-        const route = localRoutes.find((route) => route.path === menu.url);
+        const route = localRoutes.find((route) => route.path === menu.path);
         if (route) routes.push(route);
         if (!firstMenu) {
           firstMenu = menu;
@@ -49,15 +49,15 @@ export function pathMapToMenu(
   breadcrumbs?: IBreadcrumb[]
 ): any {
   for (const menu of userMenus) {
-    if (menu.type === 1) {
+    if (menu.type === "1") {
       const findMenu = pathMapToMenu(menu.children || [], currentPath);
       if (findMenu) {
         breadcrumbs?.push({ name: menu.name });
-        breadcrumbs?.push({ name: findMenu.name, path: findMenu.url });
+        breadcrumbs?.push({ name: findMenu.name, path: findMenu.path });
         return findMenu;
       }
-    } else if (menu.type === 2 && menu.url === currentPath) {
-      breadcrumbs?.push({ name: menu.name, path: menu.url });
+    } else if (menu.type === "2" && menu.path === currentPath) {
+      breadcrumbs?.push({ name: menu.name, path: menu.path });
       return menu;
     }
   }

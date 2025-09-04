@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { AxiosInstance } from "axios";
 import type { ApiRequestInterceptors, ApiRequestConfig } from "./type";
-import { ElLoading } from "element-plus";
+import { ElLoading, ElMessage } from "element-plus";
 import { LoadingInstance } from "element-plus/es/components/loading/src/loading";
 
 const DEFAULT_LOADING = true; // 默认显示加载动画
@@ -34,7 +34,7 @@ class ApiRequest {
     // 2. 添加所有实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log("所有实例的请求拦截器");
+        // console.log("所有实例的请求拦截器");
 
         if (this.showLoading) {
           this.loading = ElLoading.service({
@@ -52,13 +52,14 @@ class ApiRequest {
     );
     this.instance.interceptors.response.use(
       (res) => {
-        console.log("所有实例的响应拦截器");
+        // console.log("所有实例的响应拦截器");
 
         // 关闭加载动画
         this.loading?.close();
 
         if (res.data.code !== 200) {
           console.error("响应数据错误", res.data);
+          ElMessage.error(res.data.message);
         }
         return res.data;
       },

@@ -7,25 +7,22 @@ enum LoginAPI {
   Logout = "/logout" // 退出登录
 }
 
-export function accountLoginRequest(params: any, data: any) {
+export function accountLoginRequest(data: any) {
   return ApiRequest.post({
     url: LoginAPI.AccountLogin,
-    params,
     data
   });
 }
 
-export function getUserById(params: any, id: number) {
+export function getUserById(id: number) {
   return ApiRequest.get({
-    url: LoginAPI.UserInfo + id,
-    params
+    url: LoginAPI.UserInfo + id
   });
 }
 
-export function getUserMenusByRoleId(params: any, id: number) {
+export function getUserMenusByRoleId(id: number) {
   return ApiRequest.get({
-    url: LoginAPI.UserMenus + id + "/menu",
-    params
+    url: LoginAPI.UserMenus + id + "/menu"
   });
 }
 

@@ -10,9 +10,6 @@
         <el-button :icon="Refresh" plain>刷新</el-button>
         <el-button :icon="Plus" type="primary" plain>新建用户</el-button>
       </template>
-      <template #createTime="scope">
-        {{ formatDateTime(scope?.row?.createTime, "YYYY-MM-DD") }}
-      </template>
       <template #handler>
         <div>
           <el-button type="primary" link>编辑</el-button>
@@ -68,7 +65,7 @@ export default defineComponent({
       store.dispatch("systemModule/getPageListAction", {
         pageName: props.pageName,
         queryInfo: {
-          currenrPage: pageInfo.value.currentPage,
+          currentPage: pageInfo.value.currentPage,
           pageSize: pageInfo.value.pageSize,
           ...queryInfo
         }

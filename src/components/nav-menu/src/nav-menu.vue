@@ -13,7 +13,7 @@
     >
       <template v-for="item in userMenus" :key="item.id">
         <!-- 二级菜单 -->
-        <template v-if="item.type === 1">
+        <template v-if="item.type === '1'">
           <!-- 二级菜单可以展开的标题 -->
           <el-sub-menu :index="item.id + ''">
             <template #title>
@@ -37,7 +37,7 @@
           </el-sub-menu>
         </template>
         <!-- 一级菜单 -->
-        <template v-else-if="item.type === 2">
+        <template v-else-if="item.type === '2'">
           <el-menu-item
             :index="item.id + ''"
             @click="handleMenuItemClick(item)"
@@ -84,7 +84,7 @@ export default defineComponent({
     const selectedmenuId = ref(menu.id + "");
 
     const handleMenuItemClick = (item: any) => {
-      router.push(item.url || "not-found");
+      router.push(item.path || "not-found");
     };
 
     function getIcon(iconName: string) {

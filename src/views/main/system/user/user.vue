@@ -10,7 +10,10 @@
       :listTableConfig="listTableConfig"
       pageName="user"
     >
-      <template #phone="scope">{{ "86 - " + scope.row.phone }}</template>
+      <template #phone="scope">{{
+        "86 - " + (scope.row.phone || "")
+      }}</template>
+      <template #role="scope">{{ roleMap[scope.row.roleId] }}</template>
     </PageList>
   </div>
 </template>
@@ -25,6 +28,8 @@ import { searchFormConfig } from "./config/search.config";
 import { listTableConfig } from "./config/list.config";
 import { usePageSearch } from "@/hooks/usePageSearch";
 
+import { roleMap } from "./config/enum";
+
 export default defineComponent({
   name: "UserPage",
   components: {
@@ -38,7 +43,8 @@ export default defineComponent({
       searchFormConfig,
       listTableConfig,
       handleSearch,
-      pagListRef
+      pagListRef,
+      roleMap
     };
   }
 });

@@ -1,6 +1,6 @@
 import { IForm } from "@/base-ui/select-form";
 
-import { sexEnum } from "./enum";
+import { roleEnum } from "./enum";
 
 export const searchFormConfig: IForm = {
   labelWidth: "80px",
@@ -20,13 +20,21 @@ export const searchFormConfig: IForm = {
       label: "手机号",
       placeholder: "请输入手机号"
     },
+    // {
+    //   field: "sex",
+    //   defaultValue: "woman",
+    //   type: "select",
+    //   label: "性别",
+    //   placeholder: "请选择性别",
+    //   options: sexEnum
+    // },
     {
-      field: "sex",
-      defaultValue: "woman",
+      field: "role",
+      defaultValue: "",
       type: "select",
-      label: "性别",
-      placeholder: "请选择性别",
-      options: sexEnum
+      label: "角色",
+      placeholder: "请选择角色",
+      options: roleEnum
     },
     {
       field: "createTime",

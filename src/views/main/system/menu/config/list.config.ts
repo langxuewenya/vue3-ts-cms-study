@@ -13,14 +13,14 @@ export const listTableConfig = {
       isEnum: true, // 是否有枚举
       optionMap: menuTypeMap // 菜单类型枚举映射
     },
-    { prop: "url", label: "菜单路径", minWidth: "100px", align: "center" },
-    // {
-    //   prop: "createTime",
-    //   label: "创建时间",
-    //   minWidth: "100px",
-    //   align: "center",
-    //   slotName: "createTime"
-    // },
+    { prop: "path", label: "菜单路径", minWidth: "100px", align: "center" },
+    {
+      prop: "createTime",
+      label: "创建时间",
+      minWidth: "100px",
+      align: "center",
+      slotName: "createTime"
+    },
     {
       label: "操作",
       minWidth: "100px",
