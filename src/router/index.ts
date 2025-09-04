@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
 import { localCache } from "@/utils/cache";
 import { firstMenu } from "@/utils/map-menus";
@@ -35,7 +35,8 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  // 使用createWebHashHistory，解决打包后index.html文件打开后页面空白的问题
+  history: createWebHashHistory(process.env.BASE_URL),
   routes
 });
 
