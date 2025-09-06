@@ -7,37 +7,10 @@
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
-            <el-form-item :label="item.label" :rules="item.rules">
-              <!-- input -->
-              <template v-if="item.type === 'input'">
-                <el-input
-                  v-model="formData[`${item.field}`]"
-                  :placeholder="item.placeholder"
-                  clearable
-                />
-              </template>
-              <!-- select -->
-              <template v-else-if="item.type === 'select'">
-                <el-select
-                  v-model="formData[`${item.field}`]"
-                  :placeholder="item.placeholder"
-                >
-                  <el-option
-                    v-for="opt in item.options"
-                    :value="opt.value"
-                    :key="opt.value"
-                    :label="opt.label"
-                  ></el-option>
-                </el-select>
-              </template>
-              <!-- datepicker -->
-              <template v-else-if="item.type === 'datepicker'">
-                <el-date-picker
-                  v-bind="item.otherOptions"
-                  v-model="formData[`${item.field}`]"
-                />
-              </template>
-            </el-form-item>
+            <CustomFormItem
+              v-model="formData[`${item.field}`]"
+              :itemConfig="item"
+            ></CustomFormItem>
           </el-col>
         </template>
       </el-row>
@@ -52,8 +25,13 @@
 import { defineComponent, PropType, ref, watch } from "vue";
 import { IFormItem } from "../types";
 
+import CustomFormItem from "@/base-ui/custom-form-item";
+
 export default defineComponent({
   name: "SelectFormPage",
+  components: {
+    CustomFormItem
+  },
   props: {
     modelValue: {
       type: Object,
