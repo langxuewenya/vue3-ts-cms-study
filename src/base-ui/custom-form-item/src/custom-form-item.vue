@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form-item :label="item.label" :rules="item.rules">
+    <el-form-item :label="item.label" :rules="item.rules" :prop="item.field">
       <!-- input -->
       <template v-if="item.type === 'input'">
         <el-input v-model="value" :placeholder="item.placeholder" clearable />
