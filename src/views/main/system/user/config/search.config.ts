@@ -15,7 +15,7 @@ export const searchFormConfig: IForm = {
       placeholder: "请输入用户名"
     },
     {
-      field: "phone",
+      field: "cellphone",
       type: "input",
       label: "手机号",
       placeholder: "请输入手机号"
@@ -29,7 +29,7 @@ export const searchFormConfig: IForm = {
     //   options: sexEnum
     // },
     {
-      field: "role",
+      field: "role_id",
       defaultValue: "",
       type: "select",
       label: "角色",

@@ -2,7 +2,7 @@
   <div class="list-table">
     <div class="header">
       <slot name="header">
-        <div class="title">{{ title }}</div>
+        <div class="title">{{ title }}列表</div>
         <div class="handler">
           <slot name="header-handler"></slot>
         </div>
@@ -12,6 +12,7 @@
       :data="listData"
       v-bind="treePropsConfig"
       border
+      max-height="500px"
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >

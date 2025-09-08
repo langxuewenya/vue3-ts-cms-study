@@ -8,12 +8,13 @@
     <PageList
       ref="pagListRef"
       :listTableConfig="listTableConfig"
+      :addEditConfig="addEditConfig"
       pageName="user"
     >
-      <template #phone="scope">{{
-        "86 - " + (scope.row.phone || "")
+      <template #cellphone="scope">{{
+        "86 - " + (scope.row.cellphone || "")
       }}</template>
-      <template #role="scope">{{ roleMap[scope.row.roleId] }}</template>
+      <template #role="scope">{{ roleMap[scope.row.role_id] }}</template>
     </PageList>
   </div>
 </template>
@@ -26,6 +27,7 @@ import PageList from "@/components/page-list";
 
 import { searchFormConfig } from "./config/search.config";
 import { listTableConfig } from "./config/list.config";
+import { addEditConfig } from "./config/addedit.config";
 import { usePageSearch } from "@/hooks/usePageSearch";
 
 import { roleMap } from "./config/enum";
@@ -42,6 +44,7 @@ export default defineComponent({
     return {
       searchFormConfig,
       listTableConfig,
+      addEditConfig,
       handleSearch,
       pagListRef,
       roleMap

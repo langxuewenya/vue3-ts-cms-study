@@ -1,22 +1,22 @@
 export const listTableConfig = {
-  title: "用户列表", // 表格左上方标题
+  title: "用户", // 页面类型名称
   showIndexColumn: false, // 是否展示序号列
   showSelectColumn: false, // 是否可选行数据
   propList: [
     { prop: "username", label: "用户名", minWidth: "100px", align: "center" },
     {
-      prop: "role",
+      prop: "role_id",
       label: "角色",
       minWidth: "80px",
       align: "center",
       slotName: "role"
     },
     {
-      prop: "phone",
+      prop: "cellphone",
       label: "手机号",
       minWidth: "100px",
       align: "center",
-      slotName: "phone"
+      slotName: "cellphone"
     },
     // {
     //   prop: "sex",
@@ -28,13 +28,13 @@ export const listTableConfig = {
     //   optionMap: sexMap // 性别枚举映射
     // },
     {
-      prop: "createTime",
+      prop: "create_time",
       label: "创建时间",
       minWidth: "100px",
       align: "center"
     },
     {
-      prop: "updateTime",
+      prop: "update_time",
       label: "更新时间",
       minWidth: "100px",
       align: "center"

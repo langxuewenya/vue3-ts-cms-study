@@ -17,7 +17,7 @@ export const roleMap: any = {
 };
 // 角色枚举
 export const roleEnum = [
-  { value: "1", label: roleMap[1] },
-  { value: "2", label: roleMap[2] },
-  { value: "3", label: roleMap[3] }
+  { value: 1, label: roleMap[1] },
+  { value: 2, label: roleMap[2] },
+  { value: 3, label: roleMap[3] }
 ];
