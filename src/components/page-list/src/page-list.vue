@@ -74,7 +74,7 @@ export default defineComponent({
 
     const store = useStore();
 
-    const pageInfo = ref({ currentPage: 1, pageSize: 10 });
+    const pageInfo = ref(props.listTableConfig.pageInfo);
     const queryCache = ref({});
 
     watch(pageInfo, () => getPageData(queryCache.value));
@@ -84,8 +84,8 @@ export default defineComponent({
       store.dispatch("systemModule/getPageListAction", {
         pageName: props.pageName,
         queryInfo: {
-          currentPage: pageInfo.value.currentPage,
-          pageSize: pageInfo.value.pageSize,
+          currentPage: pageInfo?.value?.currentPage,
+          pageSize: pageInfo?.value?.pageSize,
           ...queryInfo
         }
       });
@@ -99,7 +99,7 @@ export default defineComponent({
     );
 
     // 动态获取自定义外的其他插槽
-    const defaultSlots = ["createTime", "handler"]; // 已自定义好的插槽
+    const defaultSlots = ["handler"]; // 已自定义好的插槽
     const otherPropSlots = props.listTableConfig.propList.filter(
       (item: any) => {
         if (defaultSlots.includes(item.slotName)) return false;

@@ -8,6 +8,7 @@
     <PageList
       ref="pagListRef"
       :listTableConfig="listTableConfig"
+      :addEditConfig="addEditConfig"
       pageName="menu"
     ></PageList>
   </div>
@@ -21,6 +22,7 @@ import PageList from "@/components/page-list";
 
 import { searchFormConfig } from "./config/search.config";
 import { listTableConfig } from "./config/list.config";
+import { addEditConfig } from "../menu/config/addedit.config";
 import { usePageSearch } from "@/hooks/usePageSearch";
 
 export default defineComponent({
@@ -35,6 +37,7 @@ export default defineComponent({
     return {
       searchFormConfig,
       listTableConfig,
+      addEditConfig,
       handleSearch,
       pagListRef
     };

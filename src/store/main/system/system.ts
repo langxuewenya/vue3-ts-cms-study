@@ -15,7 +15,8 @@ import { formatDateTime } from "@/utils/format";
 const pageUrlMap: Record<string, any> = {
   user: "/user/list", // 用户页面列表
   menu: "/menu/list", // 菜单页面列表
-  userUpdate: "/user" // 用户页面新增
+  userUpdate: "/user", // 用户页面增删改
+  menuUpdate: "/menu" // 菜单页面增删改
 };
 
 const systemModule: Module<ISystemState, IRootState> = {

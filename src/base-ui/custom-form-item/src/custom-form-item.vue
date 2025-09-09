@@ -7,7 +7,7 @@
       </template>
       <!-- select -->
       <template v-else-if="item.type === 'select'">
-        <el-select v-model="value" :placeholder="item.placeholder">
+        <el-select v-model="value" :placeholder="item.placeholder" clearable>
           <el-option
             v-for="opt in item.options"
             :value="opt.value"

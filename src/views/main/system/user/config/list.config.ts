@@ -45,5 +45,7 @@ export const listTableConfig = {
       align: "center",
       slotName: "handler"
     }
-  ]
+  ],
+  // 分页配置
+  pageInfo: { currentPage: 1, pageSize: 10 }
 };

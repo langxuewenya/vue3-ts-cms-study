@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineEmits, defineExpose } from "vue";
+import { ref, defineEmits, defineExpose, watch } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
 import CustomFormItem from "@/base-ui/custom-form-item";
 
@@ -50,6 +50,13 @@ const formItems = ref<Array<any>>([]); // 表单项
 const rules = ref<FormRules>({}); // 表单验证规则
 const formLabelWidth = ref(""); // 表单标签宽度
 
+// 动态监听字段，监听函数逻辑在addedit.config.js的formItems中配置
+const multipleWatch = (item: any) => {
+  watch(
+    () => formData.value[item.field],
+    (newVal) => item.watch(newVal, formItems.value)
+  );
+};
 // 显示
 const show = (addEditConfig: any): void => {
   showDialog.value = true;
@@ -61,9 +68,11 @@ const show = (addEditConfig: any): void => {
 // 新增
 const showAdd = (title: string, addEditConfig: any) => {
   dialogTitle.value = `新增${title}`;
+  type.value = "add";
   show(addEditConfig);
   for (const item of addEditConfig.formItems) {
     formData.value[item.field] = item?.defaultValue || "";
+    item.watch ? multipleWatch(item) : null; // 设置监听
   }
 };
 // 编辑
@@ -74,6 +83,7 @@ const showEdit = (title: any, addEditConfig: any, row: any) => {
   // 回显
   for (const item of addEditConfig.formItems) {
     formData.value[item.field] = row[item.field];
+    item.watch ? multipleWatch(item) : null; // 设置监听
   }
 };
 // 关闭
