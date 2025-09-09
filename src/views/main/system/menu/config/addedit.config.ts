@@ -66,15 +66,24 @@ export const addEditConfig = {
     path: [{ required: true, message: "请输入菜单路径", trigger: "blur" }],
     type: [{ required: true, message: "请选择菜单类型", trigger: "blur" }]
   },
-  // 其他处理函数
-  otherFn: {
-    /**
-     * 编辑时，设置菜单类型禁选
-     * @param type 页面类型：新增/编辑
-     * @param formData 表单数据
-     * @param formItems 表单选项配置
-     */
-    disabledType: (type: any, formData?: any, formItems?: any) => {
+  /**
+   * 在这里编写其他处理函数
+   * @param type 页面类型：新增/编辑
+   * @param formData 表单数据
+   * @param formItems 表单选项配置
+   * @remarks 参数统一为这三个，若有变更，add-edit-dialog.vue中的函数调用处也需变更
+   */
+  otherFn: ({
+    type,
+    formData,
+    formItems
+  }: {
+    type?: any;
+    formData?: any;
+    formItems?: any;
+  }) => {
+    // 编辑时，设置菜单类型禁选
+    const disabledType = () => {
       const type_index = formItems.findIndex(
         (item: any) => item.field == "type"
       );
@@ -87,6 +96,7 @@ export const addEditConfig = {
           formItems[type_index].disabled = false;
         }
       }
-    }
+    };
+    return [disabledType()]; // 函数统一执行
   }
 };

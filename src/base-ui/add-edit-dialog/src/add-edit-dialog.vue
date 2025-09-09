@@ -67,13 +67,15 @@ const show = (addEditConfig: any): void => {
   formItems.value = addEditConfig.formItems;
   rules.value = addEditConfig.formRules;
 };
-// 处理其他函数
+// 其他函数处理
 const handleOtherFn = (addEditConfig: any) => {
   // 执行其他函数，在addedit.config.js中配置的otherFn
-  for (const fn of Object.values(addEditConfig?.otherFn)) {
-    if (typeof fn == "function") {
-      fn(type.value, formData.value, formItems.value);
-    }
+  if (addEditConfig?.otherFn) {
+    addEditConfig?.otherFn({
+      type: type.value,
+      formData: formData.value,
+      formItems: formItems.value
+    });
   }
 };
 // 新增
