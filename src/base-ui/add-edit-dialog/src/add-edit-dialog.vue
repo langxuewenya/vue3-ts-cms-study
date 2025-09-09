@@ -36,12 +36,13 @@
 import { ref, defineEmits, defineExpose, watch } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
 import CustomFormItem from "@/base-ui/custom-form-item";
+import { dialogTypeMap } from "@/config/enum";
 
 const emit = defineEmits(["addSubmit", "editSubmit"]);
 
 const showDialog = ref(false);
 const loading = ref(false);
-const type = ref("add"); // 对话类型：新增/编辑
+const type = ref(dialogTypeMap.add); // 对话类型：新增/编辑，默认为新增
 const formRef = ref<FormInstance>(); // 表单实例
 const dialogTitle = ref(""); // 弹窗标题
 const dialogWidth = ref(""); // 弹窗宽度
@@ -54,7 +55,8 @@ const formLabelWidth = ref(""); // 表单标签宽度
 const multipleWatch = (item: any) => {
   watch(
     () => formData.value[item.field],
-    (newVal) => item.watch(newVal, formItems.value)
+    // 参数根据需求传递
+    (newVal) => item?.watch(newVal, formItems.value)
   );
 };
 // 显示
@@ -65,26 +67,43 @@ const show = (addEditConfig: any): void => {
   formItems.value = addEditConfig.formItems;
   rules.value = addEditConfig.formRules;
 };
+// 处理其他函数
+const handleOtherFn = (addEditConfig: any) => {
+  // 执行其他函数，在addedit.config.js中配置的otherFn
+  for (const fn of Object.values(addEditConfig?.otherFn)) {
+    if (typeof fn == "function") {
+      fn(type.value, formData.value, formItems.value);
+    }
+  }
+};
 // 新增
 const showAdd = (title: string, addEditConfig: any) => {
   dialogTitle.value = `新增${title}`;
-  type.value = "add";
+  type.value = dialogTypeMap.add;
   show(addEditConfig);
-  for (const item of addEditConfig.formItems) {
+  for (const item of formItems.value) {
     formData.value[item.field] = item?.defaultValue || "";
-    item.watch ? multipleWatch(item) : null; // 设置监听
+    // 设置监听
+    if (item?.watch) {
+      multipleWatch(item);
+    }
   }
+  handleOtherFn(addEditConfig);
 };
 // 编辑
 const showEdit = (title: any, addEditConfig: any, row: any) => {
   dialogTitle.value = `编辑${title}`;
-  type.value = "edit";
+  type.value = dialogTypeMap.edit;
   show(addEditConfig);
   // 回显
-  for (const item of addEditConfig.formItems) {
+  for (const item of formItems.value) {
     formData.value[item.field] = row[item.field];
-    item.watch ? multipleWatch(item) : null; // 设置监听
+    // 设置监听
+    if (item?.watch) {
+      multipleWatch(item);
+    }
   }
+  handleOtherFn(addEditConfig);
 };
 // 关闭
 const close = () => {
@@ -104,9 +123,9 @@ const handleSubmit = () => {
   formRef.value?.validate((valid) => {
     if (valid) {
       loadingChange();
-      if (type.value == "add") {
+      if (type.value == dialogTypeMap.add) {
         emit("addSubmit", formData.value);
-      } else if (type.value == "edit") {
+      } else if (type.value == dialogTypeMap.edit) {
         emit("editSubmit", formData.value);
       }
     } else {

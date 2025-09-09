@@ -7,7 +7,12 @@
       </template>
       <!-- select -->
       <template v-else-if="item.type === 'select'">
-        <el-select v-model="value" :placeholder="item.placeholder" clearable>
+        <el-select
+          v-model="value"
+          :placeholder="item.placeholder"
+          :disabled="item.disabled"
+          clearable
+        >
           <el-option
             v-for="opt in item.options"
             :value="opt.value"
@@ -52,6 +57,14 @@ watch(
   (newVal) => {
     value.value = newVal;
   }
+);
+
+watch(
+  () => props.itemConfig,
+  (newVal) => {
+    item.value = { ...newVal };
+  },
+  { deep: true }
 );
 </script>
 

@@ -7,4 +7,5 @@ export interface IFormItem {
   placeholder?: any;
   options?: any[];
   otherOptions?: any;
+  disabled?: boolean;
 }
