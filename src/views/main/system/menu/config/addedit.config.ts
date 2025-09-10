@@ -1,5 +1,6 @@
 import { menuType, menuTypeEnum } from "./enum";
 import { dialogTypeMap } from "@/config/enum";
+import { getParentMenuListData } from "@/api/main/system/system";
 
 export const addEditConfig = {
   dialogWidth: "600px", // 弹窗宽度（不设则默认500px）
@@ -44,7 +45,8 @@ export const addEditConfig = {
       hide: true,
       type: "select",
       label: "父级菜单",
-      placeholder: "请选择父级菜单"
+      placeholder: "请选择父级菜单",
+      options: []
     },
     {
       field: "icon",
@@ -82,11 +84,33 @@ export const addEditConfig = {
     formData?: any;
     formItems?: any;
   }) => {
+    // 找出formItems对应下标，方便后续函数使用
+    const parent_id_index = formItems.findIndex(
+      (item: any) => item.field == "parent_id"
+    );
+    const type_index = formItems.findIndex((item: any) => item.field == "type");
+
+    // 获取父级菜单列表
+    const getParentMenuList = async () => {
+      const res: any = await getParentMenuListData("/menu/parent");
+      const parentMenuList = res?.data.map((item: any) => {
+        return {
+          value: item.id,
+          label: item.name
+        };
+      });
+      formItems[parent_id_index].options = parentMenuList || [];
+    };
+    // 编辑时，根据菜单类型设置父级菜单显隐
+    const setParentMenuHidden = () => {
+      if (formData["type"] == menuType.second) {
+        formItems[parent_id_index].hide = false;
+      } else {
+        formItems[parent_id_index].hide = true;
+      }
+    };
     // 编辑时，设置菜单类型禁选
     const disabledType = () => {
-      const type_index = formItems.findIndex(
-        (item: any) => item.field == "type"
-      );
       if (type == dialogTypeMap.add) {
         formItems[type_index].disabled = false;
       } else if (type == dialogTypeMap.edit) {
@@ -97,6 +121,6 @@ export const addEditConfig = {
         }
       }
     };
-    return [disabledType()]; // 函数统一执行
+    return [getParentMenuList(), setParentMenuHidden(), disabledType()]; // 函数统一执行
   }
 };
