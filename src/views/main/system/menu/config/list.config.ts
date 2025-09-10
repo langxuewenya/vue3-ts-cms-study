@@ -1,5 +1,13 @@
 import { menuTypeMap } from "./enum";
 
+// 根据是否有 children 判断是不是一级节点
+const tableRowClassName = ({ row }: { row: any }) => {
+  if (row.children && row.children.length > 0) {
+    return "tree-first-level-row";
+  }
+  return "";
+};
+
 export const listTableConfig = {
   title: "菜单",
   propList: [
@@ -32,7 +40,8 @@ export const listTableConfig = {
     rowKey: "id",
     treeProp: {
       children: "children"
-    }
+    },
+    "row-class-name": tableRowClassName
   },
   showFooter: false,
   // 分页配置

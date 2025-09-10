@@ -145,6 +145,10 @@ export default defineComponent({
       color: @theme-color;
     }
   }
+  // 设置树形一级节点样式
+  ::v-deep .el-table .tree-first-level-row {
+    background-color: #ecf5ff !important;
+  }
   .footer {
     margin-top: 10px;
     display: flex;
