@@ -1,18 +1,11 @@
 <template>
   <div class="role">
-    <h2>role</h2>
+    <RoleList></RoleList>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "RolePage",
-  setup() {
-    return {};
-  }
-});
+<script lang="ts" setup>
+import RoleList from "./role-list";
 </script>
 
 <style scoped></style>

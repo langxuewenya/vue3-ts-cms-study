@@ -14,9 +14,10 @@ import { formatDateTime } from "@/utils/format";
 
 const pageUrlMap: Record<string, any> = {
   user: "/user/list", // 用户页面列表
-  menu: "/menu/list", // 菜单页面列表
   userUpdate: "/user", // 用户页面增删改
-  menuUpdate: "/menu" // 菜单页面增删改
+  menu: "/menu/list", // 菜单页面列表
+  menuUpdate: "/menu", // 菜单页面增删改
+  role: "/role/list" // 角色页面列表
 };
 
 const systemModule: Module<ISystemState, IRootState> = {
@@ -26,7 +27,9 @@ const systemModule: Module<ISystemState, IRootState> = {
       userList: [],
       userTotalCount: 0,
       menuList: [],
-      menuTotalCount: 0
+      menuTotalCount: 0,
+      roleList: [],
+      roleTotalCount: 0
     };
   },
   mutations: {
@@ -55,6 +58,19 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeMenuTotalCount(state, menuTotalCount: number) {
       state.menuTotalCount = menuTotalCount;
+    },
+    changeRoleList(state, roleList: any[]) {
+      const formatList = roleList.map((item) => {
+        return {
+          ...item,
+          create_time: formatDateTime(item.create_time),
+          update_time: formatDateTime(item.update_time)
+        };
+      });
+      state.roleList = formatList;
+    },
+    changeRoleTotalCount(state, roleTotalCount: number) {
+      state.roleTotalCount = roleTotalCount;
     }
   },
   // getter可以返回一个函数
