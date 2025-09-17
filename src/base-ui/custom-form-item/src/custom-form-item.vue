@@ -3,7 +3,12 @@
     <el-form-item :label="item.label" :rules="item.rules" :prop="item.field">
       <!-- input -->
       <template v-if="item.type === 'input'">
-        <el-input v-model="value" :placeholder="item.placeholder" clearable />
+        <el-input
+          v-model="value"
+          :placeholder="item.placeholder"
+          :disabled="item.disabled"
+          clearable
+        />
       </template>
       <!-- select -->
       <template v-else-if="item.type === 'select'">
