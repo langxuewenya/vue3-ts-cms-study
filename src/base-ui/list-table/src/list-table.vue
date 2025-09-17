@@ -48,15 +48,11 @@
     </el-table>
     <div class="footer" v-if="showFooter">
       <slot name="footer">
-        <el-pagination
-          v-model:current-page="pageInfo.currentPage"
-          v-model:page-size="pageInfo.pageSize"
-          :page-sizes="[10, 20, 30]"
-          :background="true"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="datasTotalCount"
-          @change="handlePageChange"
-        />
+        <ListPagination
+          v-bind="page"
+          :datasTotalCount="datasTotalCount"
+          @handlePageChange="handlePageChange"
+        ></ListPagination>
       </slot>
     </div>
   </div>
@@ -64,10 +60,14 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
+import ListPagination from "@/base-ui/list-pagination";
 import { IPropsList } from "../types/index";
 
 export default defineComponent({
   name: "ListTablePage",
+  components: {
+    ListPagination
+  },
   props: {
     title: {
       type: String,
@@ -110,9 +110,6 @@ export default defineComponent({
   },
   emits: ["selectionChange", "update:page"],
   setup(props, { emit }) {
-    // page双向绑定
-    const pageInfo = ref({ ...props.page });
-
     // 当前页/页面size改变
     const handlePageChange = (currentPage: number, pageSize: number) => {
       emit("update:page", { currentPage, pageSize });
@@ -123,7 +120,6 @@ export default defineComponent({
       emit("selectionChange", value);
     };
     return {
-      pageInfo,
       handlePageChange,
       handleSelectionChange
     };
