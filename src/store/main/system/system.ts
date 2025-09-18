@@ -17,7 +17,8 @@ const pageUrlMap: Record<string, any> = {
   userUpdate: "/user", // 用户页面增删改
   menu: "/menu/list", // 菜单页面列表
   menuUpdate: "/menu", // 菜单页面增删改
-  role: "/role/list" // 角色页面列表
+  role: "/role/list", // 角色页面列表
+  roleUpdate: "/role" // 角色列表增删改
 };
 
 const systemModule: Module<ISystemState, IRootState> = {

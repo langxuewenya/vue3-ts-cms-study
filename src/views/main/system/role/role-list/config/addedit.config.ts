@@ -16,6 +16,10 @@ export const addEditConfig = {
       type: "input",
       label: "角色备注",
       placeholder: "请输入角色备注"
+    },
+    {
+      field: "id",
+      hide: true
     }
   ],
   formRules: {
