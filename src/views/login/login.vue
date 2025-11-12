@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="left">
-      <div class="system-title">{{ systemTitle }}管理系统</div>
+      <div class="system-title">{{ systemTitle }}</div>
       <div class="image">
         <img class="login-img" src="@/assets/img/login.jpg" />
       </div>
@@ -22,7 +22,9 @@ export default defineComponent({
     loginAccount
   },
   setup() {
-    const systemTitle = ref("XX后台");
+    const systemTitle = ref(
+      process.env.VUE_APP_SYSTEM_NAME || "XX后台管理系统"
+    );
 
     return { systemTitle };
   }
